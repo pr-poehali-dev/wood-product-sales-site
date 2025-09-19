@@ -7,6 +7,7 @@ import Icon from '@/components/ui/icon'
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState('home')
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const products = [
     {
@@ -54,6 +55,7 @@ const Index = () => {
 
   const scrollToSection = (sectionId: string) => {
     setActiveSection(sectionId)
+    setMobileMenuOpen(false)
     const element = document.getElementById(sectionId)
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' })
@@ -87,12 +89,53 @@ const Index = () => {
               ))}
             </nav>
             
-            <Button className="bg-wood-saddle hover:bg-wood-chocolate text-white">
-              <Icon name="Phone" size={16} className="mr-2" />
-              Заказать звонок
-            </Button>
+            <div className="flex items-center space-x-4">
+              <Button className="hidden sm:flex bg-wood-saddle hover:bg-wood-chocolate text-white">
+                <Icon name="Phone" size={16} className="mr-2" />
+                Заказать звонок
+              </Button>
+              
+              {/* Mobile Menu Button */}
+              <button
+                className="md:hidden p-2 text-wood-dark hover:text-wood-saddle transition-colors"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-label="Toggle menu"
+              >
+                <Icon name={mobileMenuOpen ? "X" : "Menu"} size={24} />
+              </button>
+            </div>
           </div>
         </div>
+        
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-white border-t border-wood-wheat shadow-lg">
+            <nav className="container mx-auto px-6 py-4">
+              <div className="space-y-4">
+                {navigationItems.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => scrollToSection(item.id)}
+                    className={`flex items-center space-x-3 w-full p-3 rounded-lg text-left transition-colors ${
+                      activeSection === item.id 
+                        ? 'bg-wood-saddle/10 text-wood-saddle' 
+                        : 'text-gray-600 hover:bg-wood-wheat/20 hover:text-wood-saddle'
+                    }`}
+                  >
+                    <Icon name={item.icon as any} size={20} />
+                    <span className="font-medium">{item.label}</span>
+                  </button>
+                ))}
+                <div className="pt-4 border-t border-wood-wheat/50">
+                  <Button className="w-full bg-wood-saddle hover:bg-wood-chocolate text-white">
+                    <Icon name="Phone" size={16} className="mr-2" />
+                    Заказать звонок
+                  </Button>
+                </div>
+              </div>
+            </nav>
+          </div>
+        )}
       </header>
 
       {/* Hero Section */}
