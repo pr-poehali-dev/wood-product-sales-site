@@ -32,6 +32,12 @@ export default {
 					DEFAULT: 'hsl(var(--secondary))',
 					foreground: 'hsl(var(--secondary-foreground))'
 				},
+				wood: {
+					saddle: '#D2691E',
+					chocolate: '#A0522D',
+					wheat: '#F5DEB3',
+					dark: '#2F1B14'
+				},
 				destructive: {
 					DEFAULT: 'hsl(var(--destructive))',
 					foreground: 'hsl(var(--destructive-foreground))'
